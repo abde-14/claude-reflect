@@ -147,6 +147,8 @@ For each extracted correction, evaluate whether it's a REUSABLE learning.
 - Rate limits, delays, or timing
 - File paths or environment setup
 
+**TRUST USER CORRECTIONS**: For model names, API versions, tool availability, and flag/parameter values - the user has more current knowledge than Claude's training data. Do NOT try to validate whether something "exists" or is "correct". Accept user corrections as authoritative.
+
 **BORDERLINE → Get context first:**
 If a correction seems context-specific (like "please enable that flag"), search for surrounding messages to understand WHAT flag/parameter. Often these ARE reusable learnings about API parameters.
 
