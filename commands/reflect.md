@@ -1,6 +1,6 @@
 ---
 description: Reflect on session corrections and update CLAUDE.md (with human review)
-allowed-tools: Read, Edit, Write, Glob, Bash, Grep, AskUserQuestion
+allowed-tools: Read, Edit, Write, Glob, Bash, Grep, AskUserQuestion, TodoWrite
 ---
 
 ## Arguments
@@ -10,6 +10,7 @@ allowed-tools: Read, Edit, Write, Glob, Bash, Grep, AskUserQuestion
 - `--targets`: Show detected AI assistant config files and exit.
 - `--review`: Show learnings with stale/decayed entries for review.
 - `--dedupe`: Scan CLAUDE.md for similar entries and propose consolidations.
+- `--include-tool-errors`: Include project-specific tool execution errors in scan (auto-enabled with `--scan-history`).
 
 ## Context
 - Project CLAUDE.md: @CLAUDE.md
@@ -44,6 +45,60 @@ test -f AGENTS.md && echo "AGENTS.md"
 - Once applied to CLAUDE.md, entries are permanent (edit manually to remove)
 
 ## Your Task
+
+### MANDATORY: Initialize Task Tracking (Step 0)
+
+**BEFORE starting any work**, use TodoWrite to create a task list for the entire workflow. This ensures no steps are skipped and provides visibility into progress.
+
+**Why this is critical:**
+- The /reflect workflow has 10+ phases that must execute in order
+- Without tracking, Claude may skip steps or lose context
+- TodoWrite acts as a checkpoint system ensuring completeness
+
+**Initialize with this task list (adjust based on arguments):**
+
+```
+TodoWrite tasks for /reflect:
+1. "Parse arguments and check flags" (--dry-run, --scan-history, etc.)
+2. "Load learnings queue from ~/.claude/learnings-queue.json"
+3. "Scan historical sessions" (if --scan-history)
+4. "Validate learnings with semantic analysis"
+5. "Filter by project context (global vs project-specific)"
+6. "Deduplicate similar learnings"
+7. "Check for duplicates in existing CLAUDE.md"
+8. "Present summary and get user decision"
+9. "Apply changes to CLAUDE.md/AGENTS.md"
+10. "Clear queue and confirm completion"
+```
+
+**Workflow rules:**
+- **Mark in_progress BEFORE starting each step** - this signals what's happening
+- **Mark completed IMMEDIATELY after finishing** - don't batch updates
+- **Only ONE task should be in_progress at a time**
+- **Never skip a step** - if a step doesn't apply, mark it completed with a note
+- **If blocked or error occurs**, keep task as in_progress and create a new task for the blocker
+
+**Example TodoWrite call at start:**
+```json
+{
+  "todos": [
+    {"content": "Parse arguments (--scan-history detected)", "status": "in_progress", "activeForm": "Parsing command arguments"},
+    {"content": "Load learnings queue", "status": "pending", "activeForm": "Loading queue from ~/.claude/learnings-queue.json"},
+    {"content": "Scan historical sessions", "status": "pending", "activeForm": "Scanning past sessions for corrections"},
+    {"content": "Validate with semantic analysis", "status": "pending", "activeForm": "Validating learnings semantically"},
+    {"content": "Filter by project context", "status": "pending", "activeForm": "Filtering global vs project learnings"},
+    {"content": "Deduplicate similar learnings", "status": "pending", "activeForm": "Removing duplicate learnings"},
+    {"content": "Check existing CLAUDE.md for duplicates", "status": "pending", "activeForm": "Checking for existing entries"},
+    {"content": "Present summary to user", "status": "pending", "activeForm": "Presenting learnings summary"},
+    {"content": "Apply changes to target files", "status": "pending", "activeForm": "Writing to CLAUDE.md/AGENTS.md"},
+    {"content": "Clear queue and confirm", "status": "pending", "activeForm": "Finalizing and clearing queue"}
+  ]
+}
+```
+
+**DO NOT PROCEED** to the next section until you have initialized the task list with TodoWrite.
+
+---
 
 ### Handle --targets Argument
 
@@ -398,7 +453,70 @@ Then use AskUserQuestion to let user select which to keep.
 - Tool rejections were found but not shown
 - You filtered items without user review
 
-- Continue to Step 3 (Project-Aware Filtering) with COMBINED list (queue + history)
+**0.5g. Extract Tool Execution Errors (Project-Specific Only):**
+
+Scan session files for REPEATED tool execution errors that reveal project-specific context.
+
+**What to extract:**
+Tool execution errors (`is_error: true`) that indicate project-specific issues:
+- Connection errors → Check .env for service URLs
+- Module not found → Project structure/import conventions
+- Environment undefined → Load .env file first
+- Service-specific errors (Supabase, Postgres, Redis) → Check config
+
+**What to EXCLUDE:**
+- Claude Code guardrails ("File has not been read yet", "exceeds max tokens")
+- Global Claude behavior (bash quoting, EISDIR directory confusion)
+- One-off errors (only include patterns with 2+ occurrences)
+
+**Use the extraction script:**
+```bash
+python scripts/extract_tool_errors.py --project "$(pwd)" --min-count 2 --json
+```
+
+Or use the utility functions directly:
+```python
+from lib.reflect_utils import extract_tool_errors, aggregate_tool_errors
+
+# Extract from session files
+errors = []
+for session_file in session_files:
+    errors.extend(extract_tool_errors(session_file, project_specific_only=True))
+
+# Aggregate by pattern (only keep 2+ occurrences)
+aggregated = aggregate_tool_errors(errors, min_occurrences=2)
+```
+
+**Semantic validation (optional):**
+```python
+from lib.semantic_detector import validate_tool_errors
+validated = validate_tool_errors(aggregated)
+```
+
+**Add validated error patterns to working list:**
+- Mark source as "tool-error"
+- Use `suggested_guideline` or `refined_guideline` as the proposed entry
+- Set scope to "project" (these are project-specific patterns)
+
+**Example output:**
+```
+═══════════════════════════════════════════════════════════
+TOOL ERROR PATTERNS — [N] project-specific issues found
+═══════════════════════════════════════════════════════════
+
+#1 [connection_refused] — 5 occurrences
+   Sample: "Connection refused to localhost:5432"
+   → Proposed: "Check DATABASE_URL in .env for PostgreSQL connection"
+
+#2 [env_undefined] — 3 occurrences
+   Sample: "SUPABASE_URL is not defined"
+   → Proposed: "Load .env file before accessing environment variables"
+═══════════════════════════════════════════════════════════
+```
+
+If tool error patterns are found, add them to the working list alongside user corrections.
+
+- Continue to Step 3 (Project-Aware Filtering) with COMBINED list (queue + history + tool-errors)
 
 ### Step 1: Load and Validate
 - Read the queue from `~/.claude/learnings-queue.json`
