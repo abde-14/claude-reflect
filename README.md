@@ -62,6 +62,8 @@ After installation, **restart Claude Code** (exit and reopen). Then hooks auto-c
 
 ## How It Works
 
+![claude-reflect in action](assets/reflect-demo.jpg)
+
 ### Two-Stage Process
 
 **Stage 1: Capture (Automatic)**
@@ -103,11 +105,7 @@ Each captured learning has a **confidence score** (0.60-0.95). The final score i
 
 ### Human Review
 
-When you run `/reflect`, Claude presents a summary table with options to apply, edit, or skip each learning:
-
-![claude-reflect in action](assets/reflect-demo.jpg)
-
-You choose:
+When you run `/reflect`, Claude presents a summary table with options:
 - **Apply** - Accept the learning and add to CLAUDE.md
 - **Edit before applying** - Modify the learning text first
 - **Skip** - Don't apply this learning
