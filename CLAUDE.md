@@ -16,7 +16,7 @@ hooks/hooks.json            → Hook definitions (PreCompact, PostToolUse)
 scripts/                    → Python scripts for hooks and extraction
 scripts/lib/                → Shared utilities (reflect_utils.py)
 scripts/legacy/             → Deprecated bash scripts (for reference)
-commands/*.md               → Skill definitions for /reflect, /skip-reflect, /view-queue
+commands/*.md               → Skill definitions for /reflect, /reflect-skills, /skip-reflect, /view-queue
 SKILL.md                    → Context provided when plugin is invoked
 tests/                      → Test suite (pytest)
 ```
@@ -37,6 +37,7 @@ tests/                      → Test suite (pytest)
 - `scripts/extract_tool_rejections.py`: Extracts user corrections from tool rejections
 - `scripts/compare_detection.py`: Compare regex vs semantic detection on session data
 - `commands/reflect.md`: Main skill - 850+ line document defining the /reflect workflow
+- `commands/reflect-skills.md`: Skill discovery - AI-powered pattern detection from sessions
 
 ## Development Commands
 
@@ -125,6 +126,27 @@ Session files are JSONL at `~/.claude/projects/[PROJECT_FOLDER]/`:
   "decay_days": 90
 }
 ```
+
+## Skill Discovery (/reflect-skills)
+
+Analyzes session history to discover repeating patterns that could become skills.
+
+**Design Principles:**
+- **AI-powered** — Claude uses reasoning to identify patterns, not regex
+- **Semantic similarity** — detects same intent across different phrasings
+- **Human-in-the-loop** — user approves before skill generation
+
+**Usage:**
+```bash
+/reflect-skills              # Analyze last 14 days
+/reflect-skills --days 30    # Analyze last 30 days
+/reflect-skills --dry-run    # Preview without generating files
+```
+
+**What it detects:**
+- Workflow patterns (repeated multi-step sequences)
+- Misunderstanding patterns (corrections that could become guardrails)
+- Intent similarity (same goal, different wording)
 
 ## Platform Support
 
