@@ -82,9 +82,10 @@ def find_claude_files(root_dir: Optional[str] = None) -> List[Dict[str, Any]]:
         if "CLAUDE.md" in filenames:
             full_path = Path(dirpath) / "CLAUDE.md"
             rel_path = full_path.relative_to(root)
+            # Use as_posix() for consistent forward slashes on all platforms
             results.append({
                 "path": str(full_path),
-                "relative_path": f"./{rel_path}",
+                "relative_path": f"./{rel_path.as_posix()}",
                 "type": "subdirectory",
             })
 
