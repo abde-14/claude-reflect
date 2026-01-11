@@ -20,24 +20,41 @@ allowed-tools: Read, Edit, Write, Glob, Bash, Grep, AskUserQuestion, TodoWrite
 
 ## Multi-Target Export
 
-Claude-reflect syncs learnings to CLAUDE.md and AGENTS.md (the emerging cross-tool standard).
+Claude-reflect syncs learnings to CLAUDE.md files (including subdirectories), skill files, and AGENTS.md.
 
 **Supported Targets:**
 
 | Target | File Path | Format | Notes |
 |--------|-----------|--------|-------|
-| **Claude Code** | `~/.claude/CLAUDE.md`, `./CLAUDE.md` | Markdown | Always enabled |
+| **Global CLAUDE.md** | `~/.claude/CLAUDE.md` | Markdown | Always enabled |
+| **Project CLAUDE.md** | `./CLAUDE.md` | Markdown | If exists |
+| **Subdirectory CLAUDE.md** | `./**/CLAUDE.md` | Markdown | Auto-discovered |
+| **Skill Files** | `./commands/*.md` | Markdown | When correction relates to skill |
 | **AGENTS.md** | `./AGENTS.md` | Markdown | Industry standard (Codex, Cursor, Aider, Jules, Zed, Factory) |
 
-**Detection Logic:**
-```bash
-# Always enabled
-~/.claude/CLAUDE.md
-./CLAUDE.md (if exists)
+**Target Discovery:**
 
-# Only if file exists
-test -f AGENTS.md && echo "AGENTS.md"
+Use the Python utility to find all CLAUDE.md files:
+```python
+from scripts.lib.reflect_utils import find_claude_files
+files = find_claude_files()  # Returns list of {path, relative_path, type}
 ```
+
+Or discover manually:
+```bash
+# Find all CLAUDE.md files (excluding node_modules, .git, venv, etc.)
+find . -name "CLAUDE.md" -type f \
+  -not -path "*/node_modules/*" \
+  -not -path "*/.git/*" \
+  -not -path "*/venv/*" \
+  -not -path "*/.venv/*"
+```
+
+**Target Selection:**
+- Let users choose which CLAUDE.md file(s) to write to
+- Use AI reasoning to suggest appropriate file based on learning content
+- Global learnings (model names, general patterns) → `~/.claude/CLAUDE.md`
+- Project-specific learnings → `./CLAUDE.md` or subdirectory file
 
 **Note on Confidence & Decay:**
 - Confidence scores help prioritize learnings during `/reflect` review
